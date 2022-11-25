@@ -12,13 +12,27 @@ router.get("/list", (req, res, next) => {
     .catch(next)
 })
 
-router.post("/list", (req, res, next) => {
-  helpers
-    .addSubject(req.body)
-    .then((subject) => {
-      res.status(201).json(subject)
-    })
-    .catch(next)
+router.get("/list/:id", (req, res, next) => {
+  const { id } = req.params
+  helpers.getById(id).then((item) => {
+    if (item) {
+      res.json(item)
+    } else {
+      res.status(404).json({ err: "invalid item id" })
+    }
+  })
+})
+
+router.post("/post", (req, res, next) => {
+  console.log(req)
+  res.status(201).send("Working Post")
+
+  // helpers
+  //   .addSubject(req.body)
+  //   .then((subject) => {
+  //     res.status(201).json(subject)
+  //   })
+  //   .catch(next)
 })
 
 router.delete("/list/:id", (req, res, next) => {
@@ -76,11 +90,6 @@ router.delete("/list/:id", (req, res, next) => {
 //   ]
 //   res.status(200).json(subjects)
 // })
-
-router.get("/:id", (req, res) => {
-  const id = req.params.id
-  res.status(200).send(`hello from GET /users/${id} endpoint`)
-})
 
 // router.post("/", (req, res) => {
 //   res.status(200).send("hello from the POST /users endpoint.")

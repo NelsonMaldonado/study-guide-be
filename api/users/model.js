@@ -4,10 +4,14 @@ function getAll() {
   return db("study_list")
 }
 
-async function addSubject(subject) {
+function getById(id) {
+  return db("study_list").where({ id }).first()
+}
+
+function addSubject(subject) {
   console.log(subject)
-  const [id] = await db("study_list").insert(subject)
-  return getAll().where({ id }).first()
+  db("study_list").insert(subject)
+  return subject
 }
 
 function deleteSubject(id) {
@@ -18,4 +22,5 @@ module.exports = {
   getAll,
   addSubject,
   deleteSubject,
+  getById,
 }
