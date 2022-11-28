@@ -24,15 +24,15 @@ router.get("/list/:id", (req, res, next) => {
 })
 
 router.post("/post", (req, res, next) => {
-  console.log(req)
-  res.status(201).send("Working Post")
+  console.log(req.body)
 
-  // helpers
-  //   .addSubject(req.body)
-  //   .then((subject) => {
-  //     res.status(201).json(subject)
-  //   })
-  //   .catch(next)
+  helpers
+    .addSubject(req.body)
+    .then((subject) => {
+      console.log({ subject })
+      res.status(201).json(subject)
+    })
+    .catch(next)
 })
 
 router.delete("/list/:id", (req, res, next) => {
@@ -48,6 +48,15 @@ router.delete("/list/:id", (req, res, next) => {
     })
     .catch(next)
 })
+
+router.use("*", (req, res) => {
+  res.status(400).json({
+    message: "not found",
+  })
+})
+
+module.exports = router
+
 // router.get("/", (req, res) => {
 //   const subjects = [
 //     { id: 1, title: "JASON", paragraph: "What is JASON, write it here" },
@@ -94,11 +103,3 @@ router.delete("/list/:id", (req, res, next) => {
 // router.post("/", (req, res) => {
 //   res.status(200).send("hello from the POST /users endpoint.")
 // })
-
-router.use("*", (req, res) => {
-  res.status(400).json({
-    message: "not found",
-  })
-})
-
-module.exports = router

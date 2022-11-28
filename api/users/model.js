@@ -10,8 +10,7 @@ function getById(id) {
 
 function addSubject(subject) {
   console.log(subject)
-  db("study_list").insert(subject)
-  return subject
+  return db("study_list").insert(subject)
 }
 
 function deleteSubject(id) {
